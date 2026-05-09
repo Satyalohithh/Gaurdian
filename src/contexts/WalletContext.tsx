@@ -228,55 +228,50 @@ export function WalletProvider({
   // CONNECT WALLET
   // =====================================================
 
-  const connectWallet =
-    async () => {
+ const connectWallet = async () => {
 
-    try {
+  try {
 
-      const provider =
-        (window as any).solana;
+    const provider = (window as any).solana;
 
-      if (
-        !provider?.isPhantom
-      ) {
+    if (!provider?.isPhantom) {
 
-        window.open(
-          "https://phantom.app/",
-          "_blank"
-        );
-
-        return;
-      }
-
-      const response =
-        await provider.connect();
-
-      const walletAddress =
-        response.publicKey.toString();
-
-      const connectedWallets = [
-        walletAddress
-      ];
-
-      setConnected(true);
-
-      setWallets(
-        connectedWallets
+      window.open(
+        "https://phantom.app/",
+        "_blank"
       );
 
-      fetchAnalysis(
-        connectedWallets
-      );
-
-    } catch (err) {
-
-      console.error(
-        "Wallet connection failed:",
-        err
-      );
+      return;
     }
-  };
 
+    const response =
+      await provider.connect();
+
+    const walletAddress =
+      response.publicKey.toString();
+
+    setConnected(true);
+
+    const connectedWallets = [
+      walletAddress
+    ];
+
+    setWallets(
+      connectedWallets
+    );
+
+    fetchAnalysis(
+      connectedWallets
+    );
+
+  } catch (err) {
+
+    console.error(
+      "Wallet connection failed:",
+      err
+    );
+  }
+};
   // =====================================================
   // DISCONNECT
   // =====================================================
